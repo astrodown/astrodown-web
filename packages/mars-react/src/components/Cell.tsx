@@ -1,9 +1,9 @@
 import { ExportData } from "@astrodown/schema"
 import { codeStore, storeActions } from "@astrodown/mars-core"
 import { useId } from "react";
-import React from "react"
 import Editor from "./Editor";
 import { useStore } from "@nanostores/react";
+import Output from "./Output";
 
 const { initCell } = storeActions
 
@@ -28,9 +28,7 @@ export default function Cell({ exportData }: Props) {
                 <Editor id={id} />
             </div>
 
-            <div className="output font-mono">
-                {output && <div className="output" id={`output-${id}`}>{output}</div>}
-            </div>
+            <Output output={output} />
         </div >
     );
 }

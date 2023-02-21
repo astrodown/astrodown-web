@@ -11,6 +11,6 @@ const Template: Story = (args) => <Playground {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-    exports: [{ name: "a", value: 1, type: "raw" }]
+    exports: [{ name: "a", value: 1, type: "raw" }, { name: "df", value: "https://raw.githubusercontent.com/cs109/2014_data/master/countries.csv", type: "pandas" }]
 }
 

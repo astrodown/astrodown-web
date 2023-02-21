@@ -34,7 +34,7 @@ importers:
       '@storybook/testing-library': ^0.0.13
       '@types/react': ^18.0.28
       '@types/react-dom': ^18.0.11
-      '@uiw/codemirror-theme-material': ^4.19.9
+      '@uiw/codemirror-theme-github': ^4.19.9
       '@uiw/react-codemirror': ^4.19.9
       '@vitejs/plugin-react': ^3.1.0
       autoprefixer: ^10.4.13
@@ -51,7 +51,7 @@ importers:
       '@astrodown/schema': link:../schema
       '@codemirror/lang-python': 6.1.1
       '@nanostores/react': 0.4.1_react@18.2.0
-      '@uiw/codemirror-theme-material': 4.19.9
+      '@uiw/codemirror-theme-github': 4.19.9
       '@uiw/react-codemirror': 4.19.9_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -1578,17 +1578,6 @@ packages:
 
   /@codemirror/autocomplete/6.4.2:
     resolution: {integrity: sha512-8WE2xp+D0MpWEv5lZ6zPW1/tf4AGb358T5GWYiKEuCP8MvFfT3tH2mIF9Y2yr2e3KbHuSvsVhosiEyqCpiJhZQ==}
-    dependencies:
-      '@codemirror/language': 6.6.0
-      '@codemirror/state': 6.2.0
-      '@codemirror/view': 6.9.1
-      '@lezer/common': 1.0.2
-    dev: false
-
-  /@codemirror/autocomplete/6.4.2_@codemirror+state@6.2.0:
-    resolution: {integrity: sha512-8WE2xp+D0MpWEv5lZ6zPW1/tf4AGb358T5GWYiKEuCP8MvFfT3tH2mIF9Y2yr2e3KbHuSvsVhosiEyqCpiJhZQ==}
-    peerDependencies:
-      '@codemirror/state': ^6.0.0
     dependencies:
       '@codemirror/language': 6.6.0
       '@codemirror/state': 6.2.0
@@ -3797,7 +3786,7 @@ packages:
   /@uiw/codemirror-extensions-basic-setup/4.19.9:
     resolution: {integrity: sha512-O4yAgVpD3Pon4t4+lwZ2MTGg2TeU/Jv8YzKS9ap4fP/WMTVrKmpdq+DOafbhZSlhmU0XGfQPPJ4WX6rtZgx3Rw==}
     dependencies:
-      '@codemirror/autocomplete': 6.4.2_@codemirror+state@6.2.0
+      '@codemirror/autocomplete': 6.4.2
       '@codemirror/commands': 6.2.1
       '@codemirror/language': 6.6.0
       '@codemirror/lint': 6.1.1
@@ -3806,8 +3795,8 @@ packages:
       '@codemirror/view': 6.9.1
     dev: false
 
-  /@uiw/codemirror-theme-material/4.19.9:
-    resolution: {integrity: sha512-0KzOgywKEs+p3/V38u8VW8eu2m8vAkbCVcxvupnTnv0MG5pf8JaS/gVWCQqRv7lSDtwlfVB9UdGmDR2NHEZNew==}
+  /@uiw/codemirror-theme-github/4.19.9:
+    resolution: {integrity: sha512-TxAJu7eFrIWUvekJ/jbev8fGx4fAYRH3FCxS21rm8B1OzF/aRcJM28zlC1rgKxMV5uG4KjWHOdvT3rNIVs1Meg==}
     dependencies:
       '@uiw/codemirror-themes': 4.19.9
     dev: false
