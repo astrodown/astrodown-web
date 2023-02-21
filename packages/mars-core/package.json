@@ -1,7 +1,8 @@
 {
     "name": "@astrodown/mars-core",
     "scripts": {
-        "build": "tsc"
+        "build": "tsc",
+        "publish": "pnpm run build && pnpm publish"
     },
     "main": "dist/index.js",
     "files": [
