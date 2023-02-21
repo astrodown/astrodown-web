@@ -1,5 +1,4 @@
-import { useEffect, useRef } from "react";
-import styles from "../styles/tailwind.css?inline"
+import { useRef } from "react";
 
 
 interface Props {
@@ -24,7 +23,7 @@ export default function Output({ output }: Props) {
         <div className="output-wrapper">
             {output && (
                 <div className="output px-4">
-                    <iframe ref={iframe} className="h-full w-full mt-4" srcDoc={srcDoc} onLoad={(event) => {
+                    <iframe ref={iframe} className="h-full w-full mt-4" srcDoc={srcDoc} onLoad={() => {
                         if (iframe.current) {
                             iframe.current.style.height = `${iframe.current.contentWindow!.document.body.scrollHeight}px`
                         }

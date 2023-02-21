@@ -1,12 +1,12 @@
 import React from "react";
-import { Story, Meta } from "@storybook/react/types-6-0";
+import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Cell } from "../components";
 
 export default {
     title: "Example/Cell",
     component: Cell,
-} as Meta;
+} as ComponentMeta<typeof Cell>;
 
-const Template: Story = (args) => <Cell {...args} />;
+const Template: ComponentStory<typeof Cell> = (args) => <Cell {...args} />;
 
 export const Default = Template.bind({});

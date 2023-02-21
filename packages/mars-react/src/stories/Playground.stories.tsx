@@ -1,16 +1,16 @@
 import React from "react";
-import { Story, Meta } from "@storybook/react/types-6-0";
+import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Playground } from "../components";
 
 export default {
     title: "Example/Playground",
     component: Playground,
-} as Meta;
+} as ComponentMeta<typeof Playground>;
 
-const Template: Story = (args) => <Playground {...args} />;
+const Template: ComponentStory<typeof Playground> = (args) => <Playground {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-    exports: [{ name: "a", value: 1, type: "raw" }, { name: "df", value: "https://raw.githubusercontent.com/cs109/2014_data/master/countries.csv", type: "pandas" }]
+    data: [{ name: "a", value: 1, type: "raw" }, { name: "df", value: "https://raw.githubusercontent.com/cs109/2014_data/master/countries.csv", type: "pandas" }]
 }
 

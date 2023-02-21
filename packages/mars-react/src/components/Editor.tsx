@@ -9,7 +9,6 @@ import {
     storeActions
 } from "@astrodown/mars-core";
 import Spinner from "./Spinner";
-import { PyodideStore } from "@astrodown/mars-core/dist/types";
 
 const { setExecutingId, setLoading, setOutput, setCode } = storeActions
 
