@@ -1,7 +1,9 @@
 {
     "name": "@astrodown/schema",
+    "version": "0.0.1",
     "scripts": {
-        "build": "tsc"
+        "build": "tsc",
+        "publish": "pnpm run build && pnpm publish --access public"
     },
     "main": "dist/index.js",
     "files": [
