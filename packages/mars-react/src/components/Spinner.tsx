@@ -1,5 +1,5 @@
 import { classNames } from '@astrodown/mars-core';
-import React from 'react';
+
 
 interface Props {
     className?: string;
