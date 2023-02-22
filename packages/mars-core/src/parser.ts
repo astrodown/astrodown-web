@@ -1,4 +1,5 @@
-import { PyProxy } from "pyodide";
+import { PyProxy, PyodideInterface } from "pyodide";
+import { replaceAngleBrackets } from "./utils";
 
 export const repr = (cls: string, data: unknown) => {
 	return `${cls}(${data})`;
@@ -17,7 +18,10 @@ export const fallbackParser = (data: PyProxy) => {
 	return String(data);
 };
 
-const seriesParser = (data: PyProxy, options?: { stringify: boolean }) => {
+export const seriesParser = (
+	data: PyProxy,
+	options?: { stringify: boolean },
+) => {
 	const { stringify } = options || { stringify: true };
 	const values = [];
 	const dtype = data.get(0).type;
@@ -92,21 +96,21 @@ export const DataFrameParser = (data: PyProxy) => {
     `;
 };
 
-export const parsePyProxy = (data: PyProxy | undefined) => {
-	if (!data) {
-		return "None";
+export const functionParser = async (
+	data: PyProxy,
+	instance: PyodideInterface,
+) => {
+	let funcString = data.toString();
+	funcString = replaceAngleBrackets(funcString);
+	const regex = /built-in function (\w+)/;
+	const match = funcString.match(regex);
+	if (match) {
+		const funcName = match[1];
+		const description = await instance.runPythonAsync(
+			`astrodown.js.inspect_function(${funcName})`,
+		);
+		return `${funcString}<br/>${description}`;
+	} else {
+		return funcString;
 	}
-
-	if (data.type) {
-		switch (data.type) {
-			case "Series":
-				return seriesParser(data, { stringify: true }) as string;
-			case "DataFrame":
-				return DataFrameParser(data);
-			default:
-				return fallbackParser(data);
-		}
-	}
-
-	return fallbackParser(data);
 };

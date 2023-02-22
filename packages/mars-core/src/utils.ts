@@ -5,3 +5,7 @@ export const showError = (error: unknown): string => {
 export const classNames = (...classes: string[]) => {
 	return classes.filter(Boolean).join(" ");
 };
+
+export const replaceAngleBrackets = (str: string) => {
+	return str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}

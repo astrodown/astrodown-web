@@ -1,41 +1,70 @@
 import { useStore } from "@nanostores/react";
-import { pyodideStore } from "@astrodown/mars-core";
+import { pyodideStore, storeActions } from "@astrodown/mars-core";
 import Cell from "./Cell";
 import { useEffect } from "react";
 import type { ExportData } from "@astrodown/schema";
-import { createPortal } from "react-dom";
 
 interface Props {
-    data: ExportData[];
+    exports: ExportData[];
 }
 
-const pythonSetupSrc = "https://raw.githubusercontent.com/astrodown/astrodown-python/main/scripts/setup.py"
+// const pythonSetupSrc = "https://raw.githubusercontent.com/astrodown/astrodown-python/main/scripts/setup.py"
 
-export default function Playground({ data }: Props) {
-    const { pyodide, packagesLoading, finalized, statusText } = useStore(pyodideStore);
+export default function Playground({ exports }: Props) {
+    const { pyodideManager, packagesLoading, pythonEnv } = useStore(pyodideStore);
+    const envList: Array<[string, string]> = Array.from(pythonEnv.entries()).map((entry) => {
+        const [key, value] = entry
+        if (typeof value === "function") {
+            return [key, "function"]
+        }
+        if (value instanceof Map) {
+            return [key, "dict"]
+        }
+        if (value instanceof Object && ("type" in value)) {
+            return [key, value["type"] as string]
+        }
+        if (value instanceof Array) {
+            return [key, "list"]
+        }
+        return [key, String(value)]
+
+    })
+
 
     useEffect(() => {
-        if (pyodide && !packagesLoading) {
-            pyodide.globals.set("astrodown_js", {
-                exports: data
+        if (!packagesLoading && pyodideManager.ready) {
+            pyodideManager.setGlobal("astrodown_js", {
+                exports,
             });
-            fetch(pythonSetupSrc)
-                .then((res) => res.text())
-                .then((text) => pyodide.runPython(text));
+            pyodideManager.run(`
+            import astrodown.js
+            astrodown_js = astrodown_js.to_py()
+            for export in astrodown_js["exports"]:
+                globals()[export["name"]] = astrodown.js.load_export(export)
+
+            del globals()["export"]
+            `)
+                .then(() => pyodideManager.getEnv())
+                .then(env => storeActions.setPythonEnv(env))
+                .catch((err) => console.error(err));
         }
     }, [packagesLoading]);
 
 
 
-    return <div>
-        {!finalized && createPortal(<div className="opacity-50 bg-gradient-to-br from-cyan-100 to-indigo-100 via-white absolute top-0 left-0 w-full h-full z-10 flex justify-center items-center text-2xl font-bold font-mono">
-            {statusText}
-        </div>, document.body)}
-        {data.map((exportData, i) => <Cell key={`${i}`} exportData={exportData} />)}
-        <div className="font-mono border border-blue-500 rounded-lg" >
-            <div className="p-2" id="stdout">
-                <h2 className="font-sans font-bold text-lg">Standard Output</h2>
-            </div>
+    return <div className="grid grid-cols-5 gap-8">
+        <div className="python-env col-span-1">
+            <h2 className="font-sans font-bold text-lgm mb-4">Environment</h2>
+            <ul className="text-xs tracking-tighter font-mono">
+                {envList.map((arr, i) => <li key={`obj-${i}`} className="border-b flex gap-2 py-2 px-1">
+                    <span className="">{arr[0]}</span>
+                    <span className="ml-auto">{arr[1]}</span>
+                </li>)}
+            </ul>
+        </div>
+        <div className="cell-list col-span-4">
+            {exports.map((exportData, i) => <Cell key={`${i}`} exportData={exportData} />)}
         </div>
     </div>
+
 }

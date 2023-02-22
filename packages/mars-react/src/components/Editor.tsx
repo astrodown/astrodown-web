@@ -5,7 +5,6 @@ import { useStore } from "@nanostores/react";
 import {
     codeStore,
     pyodideStore,
-    runPython,
     storeActions
 } from "@astrodown/mars-core";
 import Spinner from "./Spinner";
@@ -19,15 +18,15 @@ interface KeysPressed {
 
 
 export default function Editor({ id }: { id: string }) {
-    const { pyodide } = useStore(pyodideStore);
+    const { pyodideManager } = useStore(pyodideStore);
     const allCells = useStore(codeStore);
     const { code, loading } = allCells[id] || { output: "", code: "" };
     const execute = async () => {
-        if (pyodide) {
-            setExecutingId(id)
-            setLoading(id, true)
-            setOutput(id, await runPython(pyodide, code));
-        }
+        setExecutingId(id)
+        setLoading(id, true)
+        setOutput(id, await pyodideManager.run(code));
+        const newEnv = await pyodideManager.getEnv()
+        storeActions.setPythonEnv(newEnv)
     }
 
     let keysPressed: KeysPressed = {};
@@ -54,11 +53,12 @@ export default function Editor({ id }: { id: string }) {
                 onChange={(val) => setCode(id, val)}
                 onKeyDown={(e) => handleKeyDown(e)}
                 onKeyUp={(e) => handleKeyUp(e)}
+                style={{ fontFamily: "Fira Code, monospace" }}
             />
             <div className="absolute top-0 right-0 hidden group-hover:block">
                 <button onClick={() => execute()}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6  hover:fill-indigo-700">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
                     </svg>
                 </button>
             </div>

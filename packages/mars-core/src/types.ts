@@ -1,12 +1,13 @@
-import { PyodideInterface } from "pyodide";
+import PyodideManager from "./pyodide";
 
 export interface PyodideStore {
-	pyodide: PyodideInterface | null;
+	pyodideManager: PyodideManager;
 	pyodideLoading: boolean;
 	packagesLoading: boolean;
 	statusText: string;
 	finalized: boolean;
 	executingId: null | string;
+	pythonEnv: Map<string, unknown>
 }
 
 export type CodeStore = {

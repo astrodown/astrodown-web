@@ -1,4 +1,4 @@
-import { runPython } from "./python";
+import PyodideManager from "./pyodide";
 import {
 	pyodideStore,
 	codeStore,
@@ -7,6 +7,7 @@ import {
 	setCode,
 	setOutput,
 	setLoading,
+	setPythonEnv,
 } from "./store";
 import { showError, classNames } from "./utils";
 const storeActions = {
@@ -15,13 +16,14 @@ const storeActions = {
 	setCode,
 	setOutput,
 	setLoading,
+	setPythonEnv,
 };
 
 export {
 	pyodideStore,
 	codeStore,
 	storeActions,
-	runPython,
+	PyodideManager,
 	classNames,
 	showError,
 };

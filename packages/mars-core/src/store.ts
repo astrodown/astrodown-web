@@ -1,17 +1,32 @@
-import { action, map, onMount } from "nanostores";
-import { loadPyodide } from "pyodide";
+import { action, map } from "nanostores";
 import { CodeStore, PyodideStore } from "./types";
-
-const indexURL = "https://cdn.jsdelivr.net/pyodide/v0.22.1/full/";
+import PyodideManager from "./pyodide";
 
 export const pyodideStore = map<PyodideStore>({
-	pyodide: null,
+	pyodideManager: new PyodideManager(),
 	pyodideLoading: true,
 	packagesLoading: false,
 	statusText: "Preparing Python environment ...",
 	finalized: false,
 	executingId: null,
+	pythonEnv: new Map(),
 });
+
+export const setPythonEnv = action(
+	pyodideStore,
+	"setPythonEnv",
+	(store, env: Map<string, unknown>) => {
+		store.setKey("pythonEnv", env);
+	},
+);
+
+export const setPyodideManager = action(
+	pyodideStore,
+	"setPyodideManager",
+	(store, manager) => {
+		store.setKey("pyodideManager", manager);
+	},
+);
 
 export const setExecutingId = action(
 	pyodideStore,
@@ -20,36 +35,6 @@ export const setExecutingId = action(
 		store.setKey("executingId", id);
 	},
 );
-
-const captureStdout = (text: string) => {
-	const element = document.getElementById("stdout");
-	if (element) {
-		const stdoutItem = document.createElement("p");
-		stdoutItem.textContent = text;
-		element.appendChild(stdoutItem);
-	}
-};
-
-onMount(pyodideStore, () => {
-	loadPyodide({ indexURL, stdout: captureStdout }).then(async (pyodide) => {
-		// pyodide is now ready to use...
-		pyodideStore.setKey("pyodide", pyodide);
-		pyodideStore.setKey("pyodideLoading", false);
-		// start installing packages
-		pyodideStore.setKey("packagesLoading", true);
-		pyodideStore.setKey("statusText", "Installing packages: numpy, pandas ...");
-		await pyodide.loadPackage("micropip");
-		const micropip = pyodide.pyimport("micropip");
-		await micropip.install("pandas");
-		await micropip.install("astrodown");
-		pyodideStore.setKey("packagesLoading", false);
-		// setup finished
-		pyodideStore.setKey("statusText", "Environment is ready!");
-		setTimeout(() => {
-			pyodideStore.setKey("finalized", true);
-		}, 100);
-	});
-});
 
 export const codeStore = map<CodeStore>({});
 
@@ -77,9 +62,9 @@ export const setCode = action(
 export const setOutput = action(
 	codeStore,
 	"setOutput",
-	(store, id: string, output: string | undefined) => {
+	(store, id: string, output: string) => {
 		const old = codeStore.get()[id] || { code: "" };
-		store.setKey(id, { ...old, loading: false, output: String(output) });
+		store.setKey(id, { ...old, loading: false, output });
 	},
 );
 

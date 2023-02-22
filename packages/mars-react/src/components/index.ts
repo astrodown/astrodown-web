@@ -1,3 +1,3 @@
 import Cell from "./Cell";
-import Playground from "./Playground";
-export { Cell, Playground };
+import PlaygroundWrapper from "./PlaygroundWrapper";
+export { Cell, PlaygroundWrapper };

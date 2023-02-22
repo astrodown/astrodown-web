@@ -1,3 +1,3 @@
-import { Playground } from "./components";
+import { PlaygroundWrapper } from "./components";
 
-export { Playground };
+export { PlaygroundWrapper };
