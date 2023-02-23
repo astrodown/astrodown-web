@@ -62,7 +62,6 @@ export const DataFrameParser = (data: PyProxy) => {
 		if (!displayRows) displayRows = colValues.length;
 		dataset.set(col, colValues);
 	}
-	// const ncol = dataset.size;
 	const records: Array<string[]> = [];
 	for (let i = 0; i < displayRows!; i++) {
 		const row: string[] = [];

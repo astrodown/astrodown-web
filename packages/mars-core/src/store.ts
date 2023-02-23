@@ -1,6 +1,7 @@
 import { action, map } from "nanostores";
-import { CodeStore, PyodideStore } from "./types";
+import { Cell, CellId, CodeStore, PyodideStore } from "./types";
 import PyodideManager from "./pyodide";
+import { generateId } from "./utils";
 
 export const pyodideStore = map<PyodideStore>({
 	pyodideManager: new PyodideManager(),
@@ -10,7 +11,16 @@ export const pyodideStore = map<PyodideStore>({
 	finalized: false,
 	executingId: null,
 	pythonEnv: new Map(),
+	installedPackages: [],
 });
+
+export const setInstalledPackages = action(
+	pyodideStore,
+	"setInstalledPackages",
+	(store, packages: string[]) => {
+		store.setKey("installedPackages", packages);
+	},
+);
 
 export const setPythonEnv = action(
 	pyodideStore,
@@ -36,43 +46,82 @@ export const setExecutingId = action(
 	},
 );
 
-export const codeStore = map<CodeStore>({});
+export const codeStore = map<CodeStore>({ cells: new Map(), order: [] });
 
-export const initCell = action(
+export const setCell = action(
 	codeStore,
-	"initCell",
-	(store, id: string, code?: string) => {
-		if (!store.get()[id]) {
-			store.setKey(id, { code: code || "", output: "", loading: false });
+	"setCell",
+	(store, id: string, cell: Cell) => {
+		const { cells } = codeStore.get();
+		const old = cells.get(id);
+		if (old) {
+			store.setKey("cells", new Map(cells.set(id, cell)));
 		}
-
-		return store.get()[id];
 	},
 );
 
-export const setCode = action(
+export const setCellField = action(
 	codeStore,
-	"setCode",
-	(store, id: string, code: string) => {
-		const old = codeStore.get()[id] || { output: "", loading: false };
-		store.setKey(id, { ...old, code });
+	"setField",
+	(
+		store,
+		{ id, field, value }: { id: CellId; field: keyof Cell; value: string },
+	) => {
+		const { cells } = codeStore.get();
+		const old = cells.get(id);
+		if (old) {
+			// @ts-ignore
+			old[field] = value;
+			store.setKey("cells", new Map(cells.set(id, old)));
+		}
 	},
 );
 
-export const setOutput = action(
+export const addCell = action(
 	codeStore,
-	"setOutput",
-	(store, id: string, output: string) => {
-		const old = codeStore.get()[id] || { code: "" };
-		store.setKey(id, { ...old, loading: false, output });
+	"addCell",
+	(store, config?: { afterId?: string; code?: string }) => {
+		const { afterId, code } = config || { code: "", afterId: undefined };
+		const { cells, order } = codeStore.get();
+		const newCellId = generateId();
+		store.setKey(
+			"cells",
+			new Map(
+				cells.set(newCellId, {
+					code: code || "",
+					output: "",
+					success: null,
+					error: null,
+				}),
+			),
+		);
+		let newOrder;
+		if (afterId) {
+			const index = order.indexOf(afterId);
+			if (index !== -1) {
+				newOrder = [
+					...order.slice(0, index + 1),
+					newCellId,
+					...order.slice(index + 1),
+				];
+			} else {
+				newOrder = [...order, newCellId];
+			}
+		} else {
+			newOrder = [...order, newCellId];
+		}
+		store.setKey("order", newOrder);
 	},
 );
 
-export const setLoading = action(
+export const deleteCell = action(
 	codeStore,
-	"setLoading",
-	(store, id: string, loading: boolean) => {
-		const old = codeStore.get()[id] || { code: "", output: "" };
-		store.setKey(id, { ...old, loading });
+	"deleteCell",
+	(store, id: string) => {
+		const { cells, order } = codeStore.get();
+		cells.delete(id);
+		const newOrder = order.filter((cellId) => cellId !== id);
+		store.setKey("cells", new Map(cells));
+		store.setKey("order", newOrder);
 	},
 );

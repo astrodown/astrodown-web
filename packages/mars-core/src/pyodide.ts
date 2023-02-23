@@ -48,7 +48,9 @@ export default class PyodideManager {
 	}
 
 	async installPackage(name: string) {
-		return await this.micropip?.install(name);
+		if (this.micropip) {
+			return await this.micropip.install(name);
+		}
 	}
 
 	async getFunctionSignature(data: PyProxy, regex: RegExp) {
@@ -74,14 +76,30 @@ export default class PyodideManager {
 		if (this.instance === null) {
 			await this.loadPyodide({ indexURL: this.indexURL, stdout: this.stdout });
 		}
-		try {
-			const result = await this.instance?.runPythonAsync(code);
-			const html = await this.toHTML(result);
-			return html;
-		} catch (e) {
-			console.log(e);
-			return showError(e);
+
+		let html = "";
+		if (this.instance) {
+			let result;
+			try {
+				result = await this.instance.runPythonAsync(code);
+				html = await this.toHTML(result);
+			} catch (e) {
+				console.log(e);
+				throw new Error(showError(e));
+			}
 		}
+
+		return html;
+	}
+
+	async listInstalledPackages() {
+		const packages = [];
+		if (this.micropip) {
+			for (let pkg of await this.micropip.list()) {
+				packages.push(pkg);
+			}
+		}
+		return packages;
 	}
 
 	async runFile(file: string) {
@@ -117,6 +135,7 @@ export default class PyodideManager {
 		if (!data) {
 			return "";
 		}
+		console.log("pyodideManager.toHTML: ", "received data type ", data.type);
 		if (data.type) {
 			switch (data.type) {
 				case "Series":

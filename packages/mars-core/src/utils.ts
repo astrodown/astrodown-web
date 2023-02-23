@@ -8,4 +8,8 @@ export const classNames = (...classes: string[]) => {
 
 export const replaceAngleBrackets = (str: string) => {
 	return str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-}
+};
+
+export const generateId = () => {
+	return Math.random().toString(36).slice(2, 5);
+};

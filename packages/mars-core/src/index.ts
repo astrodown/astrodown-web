@@ -3,26 +3,33 @@ import {
 	pyodideStore,
 	codeStore,
 	setExecutingId,
-	initCell,
-	setCode,
-	setOutput,
-	setLoading,
+	addCell,
+	deleteCell,
+	setCell,
+	setCellField,
 	setPythonEnv,
+	setInstalledPackages,
+	setPyodideManager,
 } from "./store";
 import { showError, classNames } from "./utils";
-const storeActions = {
+const pyodideStoreActions = {
 	setExecutingId,
-	initCell,
-	setCode,
-	setOutput,
-	setLoading,
+	setPyodideManager,
 	setPythonEnv,
+	setInstalledPackages,
+};
+const codeStoreActions = {
+	setCell,
+	setCellField,
+	deleteCell,
+	addCell,
 };
 
 export {
 	pyodideStore,
+	pyodideStoreActions,
 	codeStore,
-	storeActions,
+	codeStoreActions,
 	PyodideManager,
 	classNames,
 	showError,

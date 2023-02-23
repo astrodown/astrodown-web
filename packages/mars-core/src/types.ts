@@ -1,5 +1,13 @@
 import PyodideManager from "./pyodide";
 
+export type CellId = string;
+export type Cell = {
+	code: string;
+	output: string;
+	success: boolean | null;
+	error: boolean | null;
+};
+
 export interface PyodideStore {
 	pyodideManager: PyodideManager;
 	pyodideLoading: boolean;
@@ -7,9 +15,11 @@ export interface PyodideStore {
 	statusText: string;
 	finalized: boolean;
 	executingId: null | string;
-	pythonEnv: Map<string, unknown>
+	pythonEnv: Map<string, unknown>;
+	installedPackages: string[];
 }
 
 export type CodeStore = {
-	[key: string]: { code: string; output: string; loading: boolean };
+	cells: Map<CellId, Cell>;
+	order: CellId[];
 };
