@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { PlaygroundWrapper } from "./components/";
 import { ExportData } from "@astrodown/schema";
-import { Toaster } from "react-hot-toast";
 import "./styles/tailwind.css";
 
 const exports: ExportData[] = [
@@ -18,7 +17,6 @@ const exports: ExportData[] = [
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 	<React.StrictMode>
 		<main className='px-10 py-5'>
-			<Toaster />
 			<PlaygroundWrapper exports={exports} />
 		</main>
 	</React.StrictMode>,

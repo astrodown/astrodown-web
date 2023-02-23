@@ -84,7 +84,7 @@ export default function PlaygroundWrapper({ exports }: Props) {
 	}, []);
 
 	return (
-		<div>
+		<div className="playground-wrapper" id="playground-wrapper">
 			{!finalized &&
 				createPortal(
 					<div className="opacity-75 bg-gradient-to-br from-cyan-100 to-indigo-100 via-white absolute top-0 left-0 w-full h-full z-10 flex justify-center items-center text-2xl font-bold font-mono">
