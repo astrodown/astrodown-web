@@ -1,34 +1,27 @@
-import { ExportData } from "@astrodown/schema"
-import { codeStore, storeActions } from "@astrodown/mars-core"
-import { useId } from "react";
+import { codeStore } from "@astrodown/mars-core";
 import Editor from "./Editor";
 import { useStore } from "@nanostores/react";
 import Output from "./Output";
-
-const { initCell } = storeActions
+import ActionBar from "./ActionBar";
 
 interface Props {
-    exportData: ExportData
+	id: string;
 }
 
-export default function Cell({ exportData }: Props) {
-    const id = useId();
-    let initialCode = ""
-    if ((exportData instanceof Object)) {
-        initialCode = exportData.name
-    }
-    initCell(id, initialCode);
+export default function Cell({ id }: Props) {
+	const code = useStore(codeStore);
+	const cell = code.cells.get(id);
+	if (!cell) {
+		return null;
+	}
 
-    const allCells = useStore(codeStore);
-    const { output } = allCells[id] || { output: "", code: "" };
-
-    return (
-        <div className="cell my-8">
-            <div className="editor">
-                <Editor id={id} />
-            </div>
-
-            <Output output={output} />
-        </div >
-    );
+	return (
+		<div className="cell my-4">
+			<div className="editor">
+				<Editor id={id} />
+			</div>
+			<Output output={cell.output} />
+			<ActionBar id={id} />
+		</div>
+	);
 }

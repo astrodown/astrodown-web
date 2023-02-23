@@ -34,8 +34,10 @@
     "@nanostores/react": "^0.4.1",
     "@uiw/codemirror-theme-github": "^4.19.9",
     "@uiw/react-codemirror": "^4.19.9",
+    "clsx": "^1.2.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.0"
   },
   "peerDependencies": {
     "react": "^18.0.0",
