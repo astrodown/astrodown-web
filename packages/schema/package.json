@@ -1,6 +1,7 @@
 {
     "name": "@astrodown/schema",
-    "version": "0.0.1",
+    "version": "0.0.2",
+    "type": "module",
     "scripts": {
         "build": "tsc",
         "publish": "pnpm run build && pnpm publish --access public"

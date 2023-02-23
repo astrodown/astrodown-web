@@ -1,8 +1,4 @@
-import {
-	pyodideStore,
-	pyodideStoreActions,
-	showError,
-} from "@astrodown/mars-core";
+import { pyodideStore, pyodideStoreActions } from "@astrodown/mars-core";
 import { useStore } from "@nanostores/react";
 import { useState } from "react";
 import Spinner from "./Spinner";
