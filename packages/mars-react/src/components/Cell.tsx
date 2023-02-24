@@ -24,4 +24,4 @@ const Cell = ({ id, output, success, error }: Props) => {
 	);
 };
 
-export default Cell;
+export default React.memo(Cell);
