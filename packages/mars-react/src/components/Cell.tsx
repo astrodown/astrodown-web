@@ -1,6 +1,4 @@
-import { codeStore } from "@astrodown/mars-core";
 import Editor from "./Editor";
-import { useStore } from "@nanostores/react";
 import Output from "./Output";
 import ActionBar from "./ActionBar";
 import React from "react";

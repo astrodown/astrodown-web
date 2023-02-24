@@ -27,8 +27,15 @@ interface Props {
 
 export default function Editor({ id, success, error }: Props) {
 	const { pyodideManager } = useStore(pyodideStore);
+	const { cells } = useStore(codeStore);
+	const cell = cells.get(id);
+	if (!cell) {
+		return null;
+	}
+
+	const { code } = cell;
 	const [loading, setLoading] = useState(false);
-	const [input, setInput] = useState("");
+	const [input, setInput] = useState(code);
 	const execute = async () => {
 		setLoading(true);
 		try {

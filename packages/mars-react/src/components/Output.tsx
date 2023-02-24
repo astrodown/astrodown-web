@@ -39,4 +39,4 @@ const Output = ({ output }: Props) => {
 	);
 };
 
-export default React.memo(Output);
+export default Output;
