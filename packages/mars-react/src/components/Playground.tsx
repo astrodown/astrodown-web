@@ -10,9 +10,10 @@ export default function Playground() {
 	const { finalized } = useStore(pyodideStore);
 	const { cells, order } = useStore(codeStore);
 	const cellsOrdered = order.map((id) => {
+		const cell = cells.get(id)!;
 		return {
 			id,
-			...cells.get(id),
+			...cell,
 		};
 	});
 
@@ -28,8 +29,14 @@ export default function Playground() {
 			</div>
 			<div className="col-span-4">
 				<div className="cell-list">
-					{cellsOrdered.map(({ id }) => (
-						<Cell id={id} key={id} />
+					{cellsOrdered.map(({ id, output, success, error }) => (
+						<Cell
+							id={id}
+							output={output}
+							success={success}
+							error={error}
+							key={id}
+						/>
 					))}
 				</div>
 				<StandardOutput />

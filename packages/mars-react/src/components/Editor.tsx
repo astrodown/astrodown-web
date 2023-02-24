@@ -19,12 +19,16 @@ interface KeysPressed {
 	[index: string]: boolean | undefined;
 }
 
-export default function Editor({ id }: { id: string }) {
+interface Props {
+	id: string;
+	success: boolean | null;
+	error: boolean | null;
+}
+
+export default function Editor({ id, success, error }: Props) {
 	const { pyodideManager } = useStore(pyodideStore);
 	const [loading, setLoading] = useState(false);
-	const { cells } = useStore(codeStore);
 	const [input, setInput] = useState("");
-	const { success, error } = cells.get(id) || { code: "" };
 	const execute = async () => {
 		setLoading(true);
 		try {
