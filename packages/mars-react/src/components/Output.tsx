@@ -1,10 +1,10 @@
-import { useRef } from "react";
+import React, { useRef } from "react";
 
 interface Props {
 	output: string;
 }
 
-export default function Output({ output }: Props) {
+const Output = ({ output }: Props) => {
 	const iframe = useRef<HTMLIFrameElement>(null);
 	const srcDoc = `
     <html>
@@ -37,4 +37,6 @@ export default function Output({ output }: Props) {
 			)}
 		</div>
 	);
-}
+};
+
+export default React.memo(Output);

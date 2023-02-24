@@ -21,6 +21,7 @@
   },
   "scripts": {
     "dev": "vite",
+    "preview": "vite preview",
     "build": "tsc & vite build",
     "publish": "npm run build && pnpm publish --access public",
     "build:types": "tsc -p tsconfig.json",
@@ -36,7 +37,8 @@
     "@uiw/react-codemirror": "^4.19.9",
     "clsx": "^1.2.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "sonner": "^0.1.3"
   },
   "peerDependencies": {
     "react": "^18.0.0",

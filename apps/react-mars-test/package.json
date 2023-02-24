@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@astrodown/mars-react": "workspace:^0.0.4",
-    "@astrodown/schema": "workspace:^0.0.1",
+    "@astrodown/mars-react": "workspace:*",
+    "@astrodown/schema": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

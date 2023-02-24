@@ -92,6 +92,7 @@ export default function PlaygroundWrapper({ exports }: Props) {
 					</div>,
 					document.body,
 				)}
+
 			<Playground />
 		</div>
 	);

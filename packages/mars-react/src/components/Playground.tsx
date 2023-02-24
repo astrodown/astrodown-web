@@ -3,7 +3,7 @@ import { pyodideStore, codeStore } from "@astrodown/mars-core";
 import Cell from "./Cell";
 import Environment from "./Environment";
 import InstalledPackages from "./InstalledPackages";
-
+import StandardOutput from "./StandardOutput";
 // const pythonSetupSrc = "https://raw.githubusercontent.com/astrodown/astrodown-python/main/scripts/setup.py"
 
 export default function Playground() {
@@ -32,11 +32,7 @@ export default function Playground() {
 						<Cell id={id} key={id} />
 					))}
 				</div>
-				<div className="font-mono border border-blue-500 rounded-lg">
-					<div className="p-2" id="stdout">
-						<h2 className="font-sans font-bold text-lg">Standard Output</h2>
-					</div>
-				</div>
+				<StandardOutput />
 			</div>
 		</div>
 	);

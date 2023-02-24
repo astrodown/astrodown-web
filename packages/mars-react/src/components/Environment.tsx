@@ -1,7 +1,8 @@
 import { pyodideStore } from "@astrodown/mars-core";
 import { useStore } from "@nanostores/react";
+import React from "react";
 
-export default function Environment() {
+const Environment = () => {
 	const { pythonEnv } = useStore(pyodideStore);
 
 	const envList: Array<[string, string]> = Array.from(pythonEnv.entries()).map(
@@ -36,4 +37,6 @@ export default function Environment() {
 			</ul>
 		</>
 	);
-}
+};
+
+export default React.memo(Environment);

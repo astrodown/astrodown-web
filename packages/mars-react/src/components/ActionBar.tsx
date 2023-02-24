@@ -1,6 +1,5 @@
 import { codeStoreActions } from "@astrodown/mars-core";
-
-const { addCell, deleteCell } = codeStoreActions;
+import React, { useCallback } from "react";
 
 interface Props {
 	id: string;
@@ -21,11 +20,19 @@ const Button = ({ children, onClick }: ButtonProps) => {
 	);
 };
 
-export default function ActionBar({ id }: Props) {
+const ActionBar = ({ id }: Props) => {
+	const addCell = useCallback(() => {
+		codeStoreActions.addCell({ afterId: id });
+	}, []);
+
+	const deleteCell = useCallback(() => {
+		codeStoreActions.deleteCell(id);
+	}, []);
+
 	return (
 		<div className="action-bar flex items-center justify-center gap-4 mt-6 border-t opacity-0 hover:opacity-100 transition-opacity duration-200 ease-linear font-mono text-sm">
 			<div className="add-cell -mt-4">
-				<Button onClick={() => addCell({ afterId: id })}>
+				<Button onClick={addCell}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -44,7 +51,7 @@ export default function ActionBar({ id }: Props) {
 				</Button>
 			</div>
 			<div className="delete-cell -mt-4">
-				<Button onClick={() => deleteCell(id)}>
+				<Button onClick={deleteCell}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -64,4 +71,6 @@ export default function ActionBar({ id }: Props) {
 			</div>
 		</div>
 	);
-}
+};
+
+export default React.memo(ActionBar);

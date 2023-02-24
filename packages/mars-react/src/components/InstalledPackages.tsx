@@ -1,8 +1,9 @@
 import { useStore } from "@nanostores/react";
 import { pyodideStore } from "@astrodown/mars-core";
 import InstallPackageButton from "./InstallPackageButton";
+import React from "react";
 
-export default function InstalledPackages() {
+const InstalledPackages = () => {
 	const { installedPackages } = useStore(pyodideStore);
 	return (
 		<div className="text-xs tracking-tighter font-mono">
@@ -17,4 +18,6 @@ export default function InstalledPackages() {
 			</ul>
 		</div>
 	);
-}
+};
+
+export default React.memo(InstalledPackages);

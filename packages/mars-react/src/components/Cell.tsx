@@ -3,12 +3,14 @@ import Editor from "./Editor";
 import { useStore } from "@nanostores/react";
 import Output from "./Output";
 import ActionBar from "./ActionBar";
+import React from "react";
 
 interface Props {
 	id: string;
+	output: string;
 }
 
-export default function Cell({ id }: Props) {
+const Cell = ({ id }: Props) => {
 	const code = useStore(codeStore);
 	const cell = code.cells.get(id);
 	if (!cell) {
@@ -24,4 +26,6 @@ export default function Cell({ id }: Props) {
 			<ActionBar id={id} />
 		</div>
 	);
-}
+};
+
+export default React.memo(Cell);

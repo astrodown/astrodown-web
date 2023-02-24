@@ -12,8 +12,8 @@ import {
 import Spinner from "./Spinner";
 import { useState } from "react";
 
-const { setExecutingId, setPythonEnv } = pyodideStoreActions;
-const { setCellField, setCell } = codeStoreActions;
+const { setPythonEnv } = pyodideStoreActions;
+const { setCell } = codeStoreActions;
 
 interface KeysPressed {
 	[index: string]: boolean | undefined;
@@ -23,15 +23,20 @@ export default function Editor({ id }: { id: string }) {
 	const { pyodideManager } = useStore(pyodideStore);
 	const [loading, setLoading] = useState(false);
 	const { cells } = useStore(codeStore);
-	const { code, success, error } = cells.get(id) || { code: "" };
+	const [input, setInput] = useState("");
+	const { success, error } = cells.get(id) || { code: "" };
 	const execute = async () => {
 		setLoading(true);
-		setExecutingId(id);
 		try {
-			const result = await pyodideManager.run(code);
-			setCell(id, { code, output: result, success: true, error: false });
+			const result = await pyodideManager.run(input);
+			setCell(id, { code: input, output: result, success: true, error: false });
 		} catch (e) {
-			setCell(id, { code, output: String(e), success: false, error: true });
+			setCell(id, {
+				code: input,
+				output: String(e),
+				success: false,
+				error: true,
+			});
 		}
 		setLoading(false);
 		const newEnv = await pyodideManager.getEnv();
@@ -60,10 +65,10 @@ export default function Editor({ id }: { id: string }) {
 			})}
 		>
 			<CodeMirror
-				value={code}
+				value={input}
 				theme={githubLight}
 				extensions={[python()]}
-				onChange={(val) => setCellField({ id, field: "code", value: val })}
+				onChange={(val) => setInput(val)}
 				onKeyDown={(e) => handleKeyDown(e)}
 				onKeyUp={(e) => handleKeyUp(e)}
 				style={{ fontFamily: "Fira Code, monospace" }}
