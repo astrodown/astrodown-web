@@ -1,0 +1,255 @@
+{
+    "nodes": [
+        {
+            "id": "diamond-test",
+            "data": {
+                "type": "data",
+                "slug": "diamonds/diamond-test",
+                "title": "diamonds"
+            },
+            "style": {
+                "label": {
+                    "value": "diamonds",
+                    "fontSize": 18
+                },
+                "keyshape": {
+                    "size": 60,
+                    "stroke": "#3b82f6",
+                    "fill": "#3b82f6",
+                    "fillOpacity": 0.2
+                }
+            }
+        },
+        {
+            "id": "iris",
+            "data": {
+                "type": "data",
+                "slug": "iris",
+                "title": "iris data"
+            },
+            "style": {
+                "label": {
+                    "value": "iris data",
+                    "fontSize": 18
+                },
+                "keyshape": {
+                    "size": 60,
+                    "stroke": "#3b82f6",
+                    "fill": "#3b82f6",
+                    "fillOpacity": 0.2
+                }
+            }
+        },
+        {
+            "id": "mtcars",
+            "data": {
+                "type": "data",
+                "slug": "mtcars",
+                "title": "mtcars data",
+                "description": "Irure nisi eu dolore fugiat enim labore id ullamco mollit cillum minim consequat. Enim reprehenderit elit qui ipsum incididunt voluptate eiusmod eu. Mollit aute magna consequat est velit do dolore tempor non. Duis esse consectetur cillum aute aute aliqua labore quis nostrud ad dolor elit.\n"
+            },
+            "style": {
+                "label": {
+                    "value": "mtcars dataset",
+                    "fontSize": 18
+                },
+                "keyshape": {
+                    "size": 60,
+                    "stroke": "#3b82f6",
+                    "fill": "#3b82f6",
+                    "fillOpacity": 0.2
+                }
+            }
+        },
+        {
+            "id": "marketing.md",
+            "data": {
+                "type": "analysis",
+                "slug": "marketing",
+                "title": "Marketing Analysis"
+            },
+            "style": {
+                "label": {
+                    "value": "Marketing Analysis",
+                    "fontSize": 18
+                },
+                "keyshape": {
+                    "size": 60,
+                    "stroke": "#a991f7",
+                    "fill": "#a991f7",
+                    "fillOpacity": 0.2
+                }
+            }
+        },
+        {
+            "id": "something-else",
+            "data": {
+                "type": "analysis",
+                "slug": "python/py",
+                "title": "Analysis of something else",
+                "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam tempore ad aut, deleniti cupiditate ullam asperiores at magni praesentium eaque.\n"
+            },
+            "style": {
+                "label": {
+                    "value": "Some example R code",
+                    "fontSize": 18
+                },
+                "keyshape": {
+                    "size": 60,
+                    "stroke": "#a991f7",
+                    "fill": "#a991f7",
+                    "fillOpacity": 0.2
+                }
+            }
+        },
+        {
+            "id": "r",
+            "data": {
+                "type": "analysis",
+                "slug": "r/r",
+                "title": "R",
+                "description": "This is a sample R Markdown document. You can use R Markdown to author documents like this one.\nYou can also embed R code in your document as follows\n"
+            },
+            "style": {
+                "label": {
+                    "value": "R",
+                    "fontSize": 18
+                },
+                "keyshape": {
+                    "size": 60,
+                    "stroke": "#a991f7",
+                    "fill": "#a991f7",
+                    "fillOpacity": 0.2
+                }
+            }
+        },
+        {
+            "id": "something-else2",
+            "data": {
+                "type": "analysis",
+                "slug": "test",
+                "title": "Analysis of test",
+                "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam tempore ad aut, deleniti cupiditate ullam asperiores at magni praesentium eaque.\n"
+            },
+            "style": {
+                "label": {
+                    "value": "Some example Python code",
+                    "fontSize": 18
+                },
+                "keyshape": {
+                    "size": 60,
+                    "stroke": "#a991f7",
+                    "fill": "#a991f7",
+                    "fillOpacity": 0.2
+                }
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source": "mtcars",
+            "target": "something-else",
+            "style": {
+                "label": {
+                    "value": "whatever",
+                    "fill": "#3b82f6",
+                    "stroke": "#3b82f6",
+                    "fontSize": 14
+                },
+                "keyshape": {
+                    "stroke": "#3b82f6"
+                }
+            }
+        },
+        {
+            "source": "marketing.md",
+            "target": "r.md",
+            "style": {
+                "label": {
+                    "value": "proves",
+                    "fill": "#a991f7",
+                    "stroke": "#a991f7",
+                    "fontSize": 14
+                },
+                "keyshape": {
+                    "stroke": "#a991f7"
+                }
+            }
+        },
+        {
+            "source": "something-else",
+            "target": "iris",
+            "style": {
+                "label": {
+                    "value": "produces",
+                    "fill": "#a991f7",
+                    "stroke": "#a991f7",
+                    "fontSize": 14
+                },
+                "keyshape": {
+                    "stroke": "#a991f7"
+                }
+            }
+        },
+        {
+            "source": "something-else",
+            "target": "marketing.md",
+            "style": {
+                "label": {
+                    "value": "comes before",
+                    "fill": "#a991f7",
+                    "stroke": "#a991f7",
+                    "fontSize": 14
+                },
+                "keyshape": {
+                    "stroke": "#a991f7"
+                }
+            }
+        },
+        {
+            "source": "r",
+            "target": "iris",
+            "style": {
+                "label": {
+                    "value": "",
+                    "fill": "#a991f7",
+                    "stroke": "#a991f7",
+                    "fontSize": 14
+                },
+                "keyshape": {
+                    "stroke": "#a991f7"
+                }
+            }
+        },
+        {
+            "source": "r",
+            "target": "mtcars",
+            "style": {
+                "label": {
+                    "value": "model on",
+                    "fill": "#a991f7",
+                    "stroke": "#a991f7",
+                    "fontSize": 14
+                },
+                "keyshape": {
+                    "stroke": "#a991f7"
+                }
+            }
+        },
+        {
+            "source": "r",
+            "target": "something-else",
+            "style": {
+                "label": {
+                    "value": "comes after",
+                    "fill": "#a991f7",
+                    "stroke": "#a991f7",
+                    "fontSize": 14
+                },
+                "keyshape": {
+                    "stroke": "#a991f7"
+                }
+            }
+        }
+    ]
+}
